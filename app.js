@@ -21,14 +21,15 @@
 
 const qwerty = document.getElementById("qwerty");
 const phrase = document.getElementById("phrase");
-const start = document.getElementsByClassName("btn__reset");
+let start = document.getElementsByClassName("btn__reset");
 const overlay =  document.getElementById("overlay");
 let but = document.getElementsByTagName('button');
 let letterFound;
 let body = document.getElementsByTagName("body");
 let div = document.getElementById("new-overlay");
-let div_tag=document.getElementsByClassName("win");
-let div_tag1=document.getElementsByClassName("lose");
+//let div_tag=document.getElementsByClassName("win");
+//let div_tag1=document.getElementsByClassName("lose");
+let title=document.getElementsByClassName("title");
 
 let missed = 0;
 const phrases = [
@@ -127,9 +128,10 @@ for(let i = but.length-1; i >= 0; i--)
 				if(missed === 5)
 				{
 					body[0].className = "lose";
-					div.textContent = "       Try Again!     " ;
-
-					addButton();			// Reset the game
+					overlay.style.display = 'inline';
+					start[0].textContent = "Try Again!" ;
+					title[0].textContent = "Better Luck! Next time" ;
+					//addButton();			// Reset the game
 					disableKeyboard(true);
 				//	div.className = "lose";
 				}
@@ -156,9 +158,13 @@ function checkWin(){
 	if(letter === show){
 		disableKeyboard(true);
 		body[0].className = "win";
-		div.textContent = "          You Won!        ";
+		
 		//div.className = "win";
-		addButton();
+		overlay.style.display = 'inline';
+
+		start[0].textContent = "Reset the Game";
+		title[0].textContent = "Congratulations! You Won"
+		//addButton();
 	}
 }
 
@@ -182,12 +188,9 @@ function  resetGame(){
 	removePhraseFromDisplay();
 	const phraseArray = getRandomPhraseAsArray(phrases);
 	addPhraseToDisplay(phraseArray);
-	//console.log("Length of next phrase is " +addPhraseToDisplay(phraseArray) );
-	//body[0].classList.remove("lose");
 	body[0].classList.remove("win");
 	body[0].classList.remove("lose");
-	//div_tag[0].classList.remove("win");
-	//div_tag1[0].classList.remove("lose");
+	
 
 	div.textContent = " ";
 	//addButton();	
@@ -217,25 +220,26 @@ function removePhraseFromDisplay(){
 
 
 
-function addButton(){
+/*function addButton(){
 	var button = document.createElement("a");
 	button.textContent = "Reset";
 	button.className = "reset_game";
-	div.appendChild(button);
-	button.addEventListener('click', () => {
+	div.appendChild(button);*/
+	start[0].addEventListener('click', () => {
 							console.log("You clicked the reset button");
 							disableKeyboard(false);
 							resetGame();
 	});
 
-}
+
 
 function showLetter(selectLetter){
 	const letter = document.getElementsByClassName("letter");
 	for( let i = letter.length-1; i >= 0 ; i--){
 		if(letter[i].textContent.toLowerCase() == selectLetter){
 			letter[i].style.transition = "2s";
-			letter[i].className ="show";
+			//letter[i].className ="show";
+			letter[i].classList.add('show');
 			continue;
 		}
 	}
